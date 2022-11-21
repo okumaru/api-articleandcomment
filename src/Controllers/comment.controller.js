@@ -86,7 +86,18 @@ exports.add = async (req, res) => {
  */
 exports.updateById = async (req, res) => {
   try {
-    res.send("update comment by id");
+    // res.send("update comment by id");
+    const id = req.params.id;
+    const updatedData = req.body;
+    const options = { new: true };
+
+    const dataToUpdate = await commentModel
+      .findByIdAndUpdate(id, updatedData, options)
+      .then((res) => {
+        if (!res) throw new Error("Cannot find comment with id " + id);
+        return res;
+      });
+    res.status(200).json(dataToUpdate);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
