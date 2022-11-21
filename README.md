@@ -15,9 +15,9 @@
 
 ##### Body request:
 
-title: `required`
-slug: `optional`
-content: `required`
+title: `required`  
+slug: `optional`  
+content: `required`  
 status: `optional`
 
 ```
@@ -39,7 +39,7 @@ status: `optional`
 
 ##### Body request:
 
-title: `optional`
+title: `optional`  
 status: `optional`
 
 ```
@@ -55,9 +55,9 @@ status: `optional`
 
 ##### Body request:
 
-title: `optional`
-slug: `optional`
-content: `optional`
+title: `optional`  
+slug: `optional`  
+content: `optional`  
 status: `optional`
 
 ```
@@ -81,7 +81,7 @@ status: `optional`
 
 ##### Body request:
 
-value: `required`
+value: `required`  
 article: `required`
 
 ```
@@ -101,7 +101,7 @@ article: `required`
 
 ##### Body request:
 
-value: `optional`
+value: `optional`  
 articleid: `optional`
 
 ```
@@ -117,7 +117,7 @@ articleid: `optional`
 
 ##### Body request:
 
-value: `optional`
+value: `optional`  
 articleid: `optional`
 
 ```
