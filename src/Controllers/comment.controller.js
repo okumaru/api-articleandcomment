@@ -99,7 +99,26 @@ exports.updateById = async (req, res) => {
  */
 exports.deleteById = async (req, res) => {
   try {
-    res.send("delete comment by id");
+    const id = req.params.id;
+    const data = await commentModel
+      .findByIdAndDelete(id)
+      .then((res) => {
+        if (!res) throw new Error("Cannot find comment with id " + id);
+        return res;
+      })
+      .then((comment) => {
+        // Update data article comments
+        return articleModel.findByIdAndUpdate(
+          comment.article,
+          {
+            $pullAll: {
+              comments: [{ _id: id }],
+            },
+          },
+          { new: true }
+        );
+      });
+    res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

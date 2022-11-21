@@ -1,4 +1,5 @@
 const articleModel = require("../Models/article.model");
+const commentModel = require("../Models/comment.model");
 
 /**
  *
@@ -77,7 +78,22 @@ exports.updateById = async (req, res) => {
  */
 exports.deleteById = async (req, res) => {
   try {
-    res.send("delete article by id");
+    const id = req.params.id;
+    const data = await articleModel
+      .findByIdAndDelete(id)
+      .then((res) => {
+        if (!res) throw new Error("Cannot find article with id " + id);
+        return res;
+      })
+      .then((res) => {
+        // Delete comment with article id
+        commentModel.deleteMany({ article: id }, (err, res) => {
+          if (err) throw new Error(err.message);
+        });
+
+        return res;
+      });
+    res.send(`Article with ${data.title} has been deleted..`);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
