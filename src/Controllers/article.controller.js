@@ -8,7 +8,35 @@ const commentModel = require("../Models/comment.model");
  */
 exports.getAll = async (req, res) => {
   try {
-    res.send("get all article");
+    const page = parseInt(req.query.page) || 1;
+    const paginationlimit = 10;
+    const dataskip = (page - 1) * paginationlimit;
+    const searchtitle = req.body.title;
+    const searchstatus = req.body.status;
+    let findSearch = {};
+
+    if (searchtitle) {
+      findSearch.title = searchtitle;
+    }
+
+    if (searchstatus) {
+      findSearch.status = searchstatus;
+    }
+
+    const data = await articleModel
+      .find(findSearch, null, {
+        skip: dataskip,
+        limit: paginationlimit,
+      })
+      .populate("comments")
+      .then((res) => {
+        return {
+          articles: res,
+          page_limit: paginationlimit,
+          on_page: page,
+        };
+      });
+    res.json(data);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
