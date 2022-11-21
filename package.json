@@ -1,0 +1,33 @@
+{
+  "name": "api-articleandcomment",
+  "version": "1.0.0",
+  "description": "api for code challenge on zettabyte",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/okumaru/api-articleandcomment.git"
+  },
+  "keywords": [
+    "nodejs",
+    "expressjs"
+  ],
+  "author": "Andhika M. Wijaya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/okumaru/api-articleandcomment/issues"
+  },
+  "homepage": "https://github.com/okumaru/api-articleandcomment#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "helmet": "^6.0.0",
+    "mongoose": "^6.7.2",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.20"
+  }
+}
