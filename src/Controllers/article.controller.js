@@ -1,3 +1,10 @@
+const articleModel = require("../Models/article.model");
+
+/**
+ *
+ * @param {*} req
+ * @param {*} res
+ */
 exports.getAll = async (req, res) => {
   try {
     res.send("get all article");
@@ -6,22 +13,55 @@ exports.getAll = async (req, res) => {
   }
 };
 
+/**
+ *
+ * @param {*} req
+ * @param {*} res
+ */
 exports.getOneById = async (req, res) => {
   try {
-    res.send("get one article by id");
+    const id = req.params.id;
+    const data = await articleModel
+      .findOne({ _id: id })
+      .populate("comments")
+      .then((res) => {
+        if (!res) throw new Error("Cannot find article with id " + id);
+        return res;
+      });
+    res.json(data);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
+/**
+ *
+ * @param {*} req
+ * @param {*} res
+ */
 exports.add = async (req, res) => {
   try {
-    res.send("add article");
+    const articledata = new articleModel({
+      title: req.body.title,
+      slug: req.body.slug,
+      content: req.body.content,
+      status: req.body.status,
+    });
+
+    const dataToSave = await articledata.save().catch(function (err) {
+      throw new Error(err.message);
+    });
+    res.status(200).json(dataToSave);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
+/**
+ *
+ * @param {*} req
+ * @param {*} res
+ */
 exports.updateById = async (req, res) => {
   try {
     res.send("update article by id");
@@ -30,6 +70,11 @@ exports.updateById = async (req, res) => {
   }
 };
 
+/**
+ *
+ * @param {*} req
+ * @param {*} res
+ */
 exports.deleteById = async (req, res) => {
   try {
     res.send("delete article by id");
